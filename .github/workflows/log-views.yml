@@ -1,1 +1,24 @@
+name: Log Profile Views
 
+on:
+  workflow_dispatch:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Decode pixel.txt into pixel.png
+        run: base64 -d pixel.txt > pixel.png
+
+      - name: Commit pixel.png
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add pixel.png
+          git commit -m "Add pixel.png" || echo "No changes"
+          git push
