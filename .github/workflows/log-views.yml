@@ -5,6 +5,9 @@ on:
   push:
   pull_request:
 
+permissions:
+  contents: write   # ✅ allow push access
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -14,9 +17,6 @@ jobs:
 
       - name: Decode pixel.txt into pixel.png
         run: base64 -d pixel.txt > pixel.png
-
-      - name: Show repo name (debug)
-        run: echo "Repository = ${{ github.repository }}"
 
       - name: Commit pixel.png
         run: |
